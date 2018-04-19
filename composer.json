@@ -1,0 +1,29 @@
+{
+    "name": "mustorze/mustafilter",
+    "description": "A Filter for Laravel",
+    "type": "library",
+    "require": {
+        "php": ">=7.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mustorze",
+            "email": "mustorze@mustorze.com"
+        }
+    ],
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "prefer-stable": true,
+    "autoload": {
+        "classmap": [
+            "src/"
+        ],
+        "psr-4": {
+            "Mustorze\\MustAFilter\\": "src/"
+        }
+    }
+}
