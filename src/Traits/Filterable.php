@@ -8,11 +8,18 @@ namespace Mustorze\MustAFilter\Traits;
  */
 trait Filterable
 {
-    protected $filterClass = null;
     private $filter = null;
 
+    /**
+     * Filterable constructor.
+     * @throws \Exception
+     */
     public function __construct()
     {
+        if (!isset($this->filterClass)) {
+            throw new \Exception('filterClass private var do not found in ' . self::class);
+        }
+
         $this->filter = new $this->filterClass;
     }
 
