@@ -24,12 +24,33 @@ trait Filterable
     }
 
     /**
+     * @param $data
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function getFilterArgs($data)
+    {
+        return self::getFilter()->getFilterArgs($data);
+    }
+
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function getFilter()
+    {
+        $class = self::class;
+        return (new $class)->filter;
+    }
+
+    /**
      * @param $builder
      * @param bool $graphQL
+     * @param array $args
      * @return mixed
      */
-    public function scopeFilter($builder, $graphQL = false)
+    public function scopeFilter($builder, $graphQL = false, array $args = [])
     {
-        return $this->filter->apply($builder, $graphQL);
+        return $this->filter->apply($builder, $graphQL, $args);
     }
 }
