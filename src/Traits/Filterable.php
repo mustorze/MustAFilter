@@ -8,6 +8,9 @@ namespace Mustorze\MustAFilter\Traits;
  */
 trait Filterable
 {
+    /**
+     * @var null Await for filter instanced class
+     */
     private $filter = null;
 
     /**
@@ -24,6 +27,8 @@ trait Filterable
     }
 
     /**
+     * Generate the data for GraphQL Args
+     *
      * @param $data
      * @return mixed
      * @throws \Exception
@@ -34,6 +39,8 @@ trait Filterable
     }
 
     /**
+     * Get instanced Filter class
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -44,6 +51,8 @@ trait Filterable
     }
 
     /**
+     * Apply the filters in current builder
+     *
      * @param $builder
      * @param bool $graphQL
      * @param array $args

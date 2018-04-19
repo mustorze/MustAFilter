@@ -10,10 +10,29 @@ use GraphQL\Type\Definition\Type;
  */
 abstract class Filter
 {
+    /**
+     * @var The query builder
+     */
     protected $builder;
-    protected $graphQL;
-    protected $args;
+
+    /**
+     * @var bool The request is a GraphQL
+     */
+    protected $graphQL = false;
+
+    /**
+     * @var array The args of GraphQL
+     */
+    protected $args = [];
+
+    /**
+     * @var array List of Filters
+     */
     protected $filters = [];
+
+    /**
+     * @var array Specification of Filters for GraphQL Schema
+     */
     protected $filtersSpec = [];
 
     /**
@@ -40,6 +59,8 @@ abstract class Filter
     }
 
     /**
+     * Apply the filters in Query
+     *
      * @param $builder
      * @param bool $graphQL
      * @param $args
@@ -61,6 +82,8 @@ abstract class Filter
     }
 
     /**
+     * Get the list filters
+     *
      * @return array
      */
     private function getFilters()
