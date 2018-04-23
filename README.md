@@ -111,11 +111,13 @@ class UsersQuery extends Query
         $with = $fields->getRelations();
 
         /**
-        * The second place to modify we found here, we need to pass filter scope to the builder, and then he will validate 
-        * and apply your filters in the query.
+        * The second place to modify we found here, we need to pass filter scope to the builder, and then he will
+        * validate and apply your filters in the query.
         * 1st param - The filter, you can create a infinites filters to use in your queries
-        * 2nd param - This param is for determine your are using in the GraphQL querie, just pass `true`, for detection.
-        * 3rd param - There we pass the args of query, it`s simple, we need to get the passed values from query to makes things working.
+        * 2nd param - This param is for determine your are using in the GraphQL querie, just pass `true`, for
+        * detection.
+        * 3rd param - There we pass the args of query, it`s simple, we need to get the passed values from query to
+        * makes things working.
         */
         return User::select($select)
             ->with($with)
