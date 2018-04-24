@@ -11,34 +11,34 @@ A simple management filters for Laravel, use into REST and GraphQL
 * Or just run `composer require mustorze/mustafilter`
 
 ### Step 2
-* In models what you want do use the filter, do you have to add `Mustorze\MustAFilter\Traits\Filterable` Trait
+* Add `Mustorze\MustAFilter\Traits\Filterable` trait to models you want to filter.
 
 ### Step 3
-* Create a new Filter class for using in the Filterable models, needs to extends `Mustorze\MustAFilter\Contracts\Filter` abstract class 
+* Extend your Filter class from from `Mustorze\MustAFilter\Contracts\Filter` Abstract one
 
-* Example, this is a filter for a `user` model
+* This is a example filter for a `user` model
 ```
 class UserFilter extends Mustorze\MustAFilter\Contracts\Filter
 {
     /**
-     * Where we declare all filters can be used in the model
+     * Declare here all the filters that can be used in the model
      */
     protected $filters = [
         'email'
     ];
 
     /**
-    * If your using GraphQL, here we declare the type and description of this filter
+    * If you're using GraphQL declare here the type and description of the filter
     */
     protected $filtersSpec = [
         'email' => [
             'type' => Type::string(),
-            'description' => 'Filter like by email of user'
+            'description' => 'like filter by user email'
       ]
     ];
 
     /**
-     * Filter will be applied to the constructor, as you can see with the same name as declared in $filters;
+     * The filter will be applied to the constructor with the name declared in $filters
      *
      * @param $value
      * @return mixed
@@ -59,16 +59,16 @@ This is a default query in GraphQL
 class UsersQuery extends Query
 {
     /**
-    * To makes things easy, i`ve create a const for the filter can i use in this query
+    * To makes things easy, i've create a const for the filter i will use in this query
     */
-    const FILTER = UserFilter::class; // it`s the same was created before
+    const FILTER = UserFilter::class; // it's the same class that was created before
 
     /**
     * Query default configuration
     */
     protected $attributes = [
         'name' => 'Admin users query',
-        'description' => 'The pagination of users'
+        'description' => 'The query pagination of users'
     ];
 
     /**
@@ -130,3 +130,27 @@ If your followed all the steps well, you can easily test your query passing the 
 #### Now we know how to use in GraphQL
 
 ### REST
+In REST we usually make a query with some arguments we needs to use and we return the results of this query for the requesters
+
+Example:
+```
+public function fetchAllUsers()
+{
+    return User::where('status', 1) // a default query settings
+        ->get(); 
+}
+```
+With the Filter, you need to add the Filter scope to the constructor. the Filter Scope automatically detects the arguments
+in the request and apply in the query
+```
+public function fetchAllUsers()
+{
+    return User::where('status', 1) // a default query settings
+        ->filter(UserFilter::class) // do not need to pass the further parameters
+        ->get(); 
+}
+```
+Now if this request is a POST or GET, and have a `email` param in the request, the `email` filter its applied to the builder
+`localhost/users/?email=example.com`
+The filter we was created are applying a `where like` in query, all the results than have `example.com` in email column 
+will be returned
