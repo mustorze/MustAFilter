@@ -43,11 +43,26 @@ abstract class Filter
      */
     public function getFilterArgs($data)
     {
+        $types = [
+            'boolean' => Type::boolean(),
+            'string' => Type::string(),
+            'integer' => Type::int(),
+            'float' => Type::float()
+        ];
+
         foreach ($this->filters as $filter) {
+            $finalType = function () use ($filter, $types) {
+                if (isset($this->filtersSpec[$filter]['type']) AND in_array($this->filtersSpec[$filter]['type'], array_keys($types))) {
+                    return $types[$this->filtersSpec[$filter]['type']];
+                }
+
+                return Type::string();
+            };
+
             $filtered = [
                 $filter => [
                     'name' => $filter,
-                    'type' => isset($this->filtersSpec[$filter]['type']) ? $this->filtersSpec[$filter]['type'] : Type::string(),
+                    'type' => $finalType(),
                     'description' => isset($this->filtersSpec[$filter]['description']) ? $this->filtersSpec[$filter]['description'] : "A $filter"
                 ]
             ];
