@@ -43,26 +43,11 @@ abstract class Filter
      */
     public function getFilterArgs($data)
     {
-        $types = [
-            'boolean' => Type::boolean(),
-            'string' => Type::string(),
-            'integer' => Type::int(),
-            'float' => Type::float()
-        ];
-
         foreach ($this->filters as $filter) {
-            $finalType = function () use ($filter, $types) {
-                if (isset($this->filtersSpec[$filter]['type']) AND in_array($this->filtersSpec[$filter]['type'], array_keys($types))) {
-                    return $types[$this->filtersSpec[$filter]['type']];
-                }
-
-                return Type::string();
-            };
-
             $filtered = [
                 $filter => [
                     'name' => $filter,
-                    'type' => $finalType(),
+                    'type' => self::getFinalType($filter),
                     'description' => isset($this->filtersSpec[$filter]['description']) ? $this->filtersSpec[$filter]['description'] : "A $filter"
                 ]
             ];
@@ -108,5 +93,25 @@ abstract class Filter
         }
 
         return $this->args;
+    }
+
+    private function getFinalType($filter)
+    {
+        $types = [
+            'boolean' => Type::boolean(),
+            'string' => Type::string(),
+            'integer' => Type::int(),
+            'float' => Type::float(),
+            'list-of-boolean' => Type::listOf(Type::boolean()),
+            'list-of-string' => Type::listOf(Type::string()),
+            'list-of-integer' => Type::listOf(Type::int()),
+            'list-of-float' => Type::listOf(Type::float())
+        ];
+
+        if (isset($this->filtersSpec[$filter]['type']) AND in_array($this->filtersSpec[$filter]['type'], array_keys($types))) {
+            return $types[$this->filtersSpec[$filter]['type']];
+        }
+
+        return Type::string();
     }
 }
