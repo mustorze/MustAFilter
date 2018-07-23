@@ -47,7 +47,7 @@ abstract class Filter
             $filtered = [
                 $filter => [
                     'name' => $filter,
-                    'type' => self::getFinalType($filter),
+                    'type' => $this->getFinalType($filter),
                     'description' => isset($this->filtersSpec[$filter]['description']) ? $this->filtersSpec[$filter]['description'] : "A $filter"
                 ]
             ];
