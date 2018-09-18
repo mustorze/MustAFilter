@@ -16,11 +16,6 @@ abstract class Filter
     protected $builder;
 
     /**
-     * @var bool The request is a GraphQL
-     */
-    protected $graphQL = false;
-
-    /**
      * @var array The args of GraphQL
      */
     protected $args = [];
@@ -62,14 +57,12 @@ abstract class Filter
      * Apply the filters in Query
      *
      * @param $builder
-     * @param bool $graphQL
      * @param $args
      * @return mixed
      */
-    public function apply($builder, bool $graphQL, array $args = [])
+    public function apply($builder, array $args = [])
     {
         $this->builder = $builder;
-        $this->graphQL = $graphQL;
         $this->args = $args;
 
         foreach ($this->getFilters() as $filter => $value) {
@@ -88,7 +81,7 @@ abstract class Filter
      */
     private function getFilters()
     {
-        if (!$this->graphQL) {
+        if (empty($this->args)) {
             return array_filter(request()->only($this->filters));
         }
 

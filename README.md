@@ -29,10 +29,11 @@ class UserFilter extends Mustorze\MustAFilter\Contracts\Filter
 
     /**
     * If you're using GraphQL declare here the type and description of the filter
+    * Available Types: 'string', 'boolean', 'integer', 'float', 'list-of-boolean', 'list-of-integer', 'list-of-float', 'list-of-string'
     */
     protected $filtersSpec = [
         'email' => [
-            'type' => Type::string(),
+            'type' => 'string', // You can specify any type available in GraphQL from the list above
             'description' => 'like filter by user email'
       ]
     ];
@@ -114,14 +115,12 @@ class UsersQuery extends Query
         * The second place to modify we found here, we need to pass filter scope to the builder, and then he will
         * validate and apply your filters in the query.
         * 1st param - The filter, you can create a infinites filters to use in your queries
-        * 2nd param - This param is for determine your are using in the GraphQL querie, just pass `true`, for
-        * detection.
-        * 3rd param - There we pass the args of query, it`s simple, we need to get the passed values from query to
+        * 2rd param - There we pass the args of query, it`s simple, we need to get the passed values from query to
         * makes things working.
         */
         return User::select($select)
             ->with($with)
-            ->filter($this::FILTER, true, $args) // The filter
+            ->filter($this::FILTER, $args) // The filter
             ->paginate($args['limit'], $select, 'page', $args['page']);
     }
 }
