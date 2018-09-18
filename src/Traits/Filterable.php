@@ -2,6 +2,8 @@
 
 namespace Mustorze\MustAFilter\Traits;
 
+use Mustorze\MustAFilter\Contracts\Filter;
+
 /**
  * Trait Filterable
  * @package Mustorze\MustAFilter\Traits
@@ -11,11 +13,11 @@ trait Filterable
     /**
      * Generate the data for GraphQL Args
      *
-     * @param $filter
+     * @param Filter $filter
      * @param $data
      * @return mixed
      */
-    public static function getFilterArgs($filter, $data)
+    public static function getFilterArgs(Filter $filter, $data)
     {
         return (new $filter)->getFilterArgs($data);
     }
@@ -24,13 +26,12 @@ trait Filterable
      * Apply the filters in current builder
      *
      * @param $builder
-     * @param $filter
-     * @param bool $graphQL
+     * @param Filter $filter
      * @param array $args
      * @return mixed
      */
-    public function scopeFilter($builder, $filter, $graphQL = false, array $args = [])
+    public function scopeFilter($builder, Filter $filter, array $args = [])
     {
-        return (new $filter)->apply($builder, $graphQL, $args);
+        return (new $filter)->apply($builder, $args);
     }
 }
