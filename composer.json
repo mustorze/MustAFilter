@@ -3,10 +3,9 @@
     "description": "A Filter for Laravel",
     "type": "library",
     "require": {
-        "php": ">=7.1",
-        "illuminate/support": "5.8.* || ^6.0 || ^7.0 || ^8.0 || ^9.0",
+        "php": "^8.0",
         "webonyx/graphql-php": "^0.13",
-        "laravel/framework": "5.8.* || ^6.0 || ^7.0 || ^8.0 || ^9.0"
+        "laravel/framework": "^9.0"
     },
     "license": "MIT",
     "authors": [
