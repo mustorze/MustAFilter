@@ -17,7 +17,7 @@ A simple management filters for Laravel, use into REST and GraphQL
 * Extend your Filter class from from `Mustorze\MustAFilter\Contracts\Filter` Abstract one
 
 * This is a example filter for a `user` model
-```
+```php
 class UserFilter extends Mustorze\MustAFilter\Contracts\Filter
 {
     /**
@@ -56,7 +56,7 @@ class UserFilter extends Mustorze\MustAFilter\Contracts\Filter
 
 ## GraphQL
 This is a default query in GraphQL
-```
+```php
 class UsersQuery extends Query
 {
     /**
@@ -132,7 +132,7 @@ If your followed all the steps well, you can easily test your query passing the 
 In REST we usually make a query with some arguments we needs to use and we return the results of this query for the requesters
 
 Example:
-```
+```php
 public function fetchAllUsers()
 {
     return User::where('status', 1) // a default query settings
@@ -141,7 +141,7 @@ public function fetchAllUsers()
 ```
 With the Filter, you need to add the Filter scope to the constructor. the Filter Scope automatically detects the arguments
 in the request and apply in the query
-```
+```php
 public function fetchAllUsers()
 {
     return User::where('status', 1) // a default query settings
